@@ -1,0 +1,54 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import {action} from "@storybook/addon-actions";
+import {withKnobs, boolean} from "@storybook/addon-knobs";
+import {Button, PrimaryButton, SecondaryButton, AlertButton} from "./Buttons";
+
+<Meta title="Buttons" component={Button} />
+
+# Buttons
+
+Buttons are used to trigger actions within an application.
+
+## Usage
+
+Buttons are used to trigger internal actions within your web applications.
+
+## Base Buttons
+
+Base buttons are meant to represent the bare-bones of any button.
+
+<Preview withToolbar>
+  <Story name="Base">
+    <Button disabled={boolean('Disabled', false)} onClick={action('button-click')}>Hello world</Button>
+  </Story>
+</Preview>
+
+## Primary Buttons
+
+Primary buttons are used as a call to action and indicate the most important action on a page.
+
+<Preview withToolbar>
+    <Story name="Primary">
+        <PrimaryButton disabled={boolean('Disabled', false)} onClick={action('button-click')}>Hello world</PrimaryButton>
+    </Story>
+</Preview>
+
+## Secondary Buttons
+
+Secondary buttons are used for less important actions on a page.
+
+<Preview withToolbar>
+    <Story name="Secondary">
+        <SecondaryButton disabled={boolean('Disabled', false)} onClick={action('button-click')}>Hello world</SecondaryButton>
+    </Story>
+</Preview>
+
+## Alert Buttons
+
+Alert buttons are used to warn the user of an action having significant effects.
+
+<Preview withToolbar>
+    <Story name="Alert">
+        <AlertButton disabled={boolean('Disabled', false)} onClick={action('button-click')}>Alert</AlertButton>
+    </Story>
+</Preview>
