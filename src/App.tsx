@@ -6,6 +6,7 @@ import {
   SecondaryButton,
   AlertButton,
 } from "./components/base";
+import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import { ThemeProvider } from "styled-components";
 
 function App(): JSX.Element {
@@ -14,6 +15,7 @@ function App(): JSX.Element {
   return (
     <>
       <ThemeProvider theme={useDarkTheme ? darkTheme : defaultTheme}>
+        <GlobalStyle />
         <div className="App">My awesome app.</div>
         <Button>Button</Button>
         <PrimaryButton onClick={() => setUseDarkTheme(!useDarkTheme)}>
@@ -21,7 +23,7 @@ function App(): JSX.Element {
         </PrimaryButton>
         <SecondaryButton>Button</SecondaryButton>
         <AlertButton>Alert</AlertButton>
-        <GlobalStyle />
+        <MarkDownEditor />
       </ThemeProvider>
     </>
   );

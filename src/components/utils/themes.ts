@@ -2,6 +2,7 @@ import { blue, neutral, red } from "./colors";
 import { primaryFont } from "./typography";
 
 export interface ThemeI {
+  backgroundColor: string;
   primaryColor: string;
   primaryColorHover: string;
   primaryColorActive: string;
@@ -20,6 +21,7 @@ export interface ThemeI {
 }
 
 export const defaultTheme: ThemeI = {
+  backgroundColor: "#f8f8ff",
   primaryColor: blue[300],
   primaryColorHover: blue[200],
   primaryColorActive: blue[100],
@@ -38,6 +40,7 @@ export const defaultTheme: ThemeI = {
 };
 
 export const darkTheme: ThemeI = {
+  backgroundColor: "#121212",
   primaryColor: neutral[100],
   primaryColorHover: neutral[200],
   primaryColorActive: neutral[100],
