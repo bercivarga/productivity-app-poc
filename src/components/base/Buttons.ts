@@ -1,5 +1,5 @@
 import styled, {ThemeProps} from "styled-components";
-import {typeScale, ThemeI} from "../utils";
+import {typeScale, ITheme} from "../utils";
 
 export const Button = styled.button`
   border: 1px solid black;
@@ -12,31 +12,31 @@ export const Button = styled.button`
   transition: all 0.1s linear;
 
   &:disabled {
-    border-color: ${(props: ThemeProps<ThemeI>) => props.theme.disabled};
+    border-color: ${(props: ThemeProps<ITheme>) => props.theme.disabled};
     background-color: white;
-    color: ${(props: ThemeProps<ThemeI>) => props.theme.disabled};
+    color: ${(props: ThemeProps<ITheme>) => props.theme.disabled};
     cursor: not-allowed;
   }
 `;
 
 export const PrimaryButton = styled(Button)`
-  border-color: ${(props: ThemeProps<ThemeI>) => props.theme.primaryColor};
-  color: ${(props: ThemeProps<ThemeI>) => props.theme.primaryColor};
+  border-color: ${(props: ThemeProps<ITheme>) => props.theme.primaryColor};
+  color: ${(props: ThemeProps<ITheme>) => props.theme.primaryColor};
   
   &:hover {
-    color: ${(props: ThemeProps<ThemeI>) => props.theme.textColorInverted};
-    background-color: ${(props: ThemeProps<ThemeI>) => props.theme.primaryColor};
+    color: ${(props: ThemeProps<ITheme>) => props.theme.textColorInverted};
+    background-color: ${(props: ThemeProps<ITheme>) => props.theme.primaryColor};
   }
 `
 
 export const SecondaryButton = styled(Button)`
   border-color: transparent;
-  color: ${(props: ThemeProps<ThemeI>) => props.theme.primaryColor};
+  color: ${(props: ThemeProps<ITheme>) => props.theme.primaryColor};
   background-color: transparent;
   
   &:hover {
     text-decoration: underline;
-    text-decoration-color: ${(props: ThemeProps<ThemeI>) => props.theme.primaryColorHover};
+    text-decoration-color: ${(props: ThemeProps<ITheme>) => props.theme.primaryColorHover};
   }
   
   &:disabled {
@@ -47,14 +47,14 @@ export const SecondaryButton = styled(Button)`
 
 export const AlertButton = styled(Button)`
   color: white;
-  background-color: ${(props: ThemeProps<ThemeI>) => props.theme.status.warning.color};
-  border-color: ${(props: ThemeProps<ThemeI>) => props.theme.status.warning.color};
+  background-color: ${(props: ThemeProps<ITheme>) => props.theme.status.warning.color};
+  border-color: ${(props: ThemeProps<ITheme>) => props.theme.status.warning.color};
   
   &:hover {
-    background-color: ${(props: ThemeProps<ThemeI>) => props.theme.status.warning.onHover};
+    background-color: ${(props: ThemeProps<ITheme>) => props.theme.status.warning.onHover};
   }
   
   &:active {
-    background-color: ${(props: ThemeProps<ThemeI>) => props.theme.status.warning.onActive};
+    background-color: ${(props: ThemeProps<ITheme>) => props.theme.status.warning.onActive};
   }
 `
