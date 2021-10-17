@@ -1,0 +1,24 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import {action} from "@storybook/addon-actions";
+import {withKnobs, boolean} from "@storybook/addon-knobs";
+import MarkDownEditor from "./MarkDownEditor";
+
+<Meta title="Markdown editor" component={MarkDownEditor} />
+
+# Markdown editor/viewer
+
+Markdown editor/viewer that lets users write notes in markdown and render it in html code.
+
+## Usage
+
+Used in places where the user can write notes.
+
+## Controls
+
+TBA
+
+<Preview withToolbar>
+  <Story name="Editor/Viewer">
+    <MarkDownEditor viewEditor={boolean('Toggle editor/viewer', false)} textContent={"# Sample title\n\nHello world! I'm a `.md` text editor.\n\n_I can do all the things other `.md` editors can do._\n\n**I can even show code:**\n```\nconst reducer = (state = {count: 0}, action) => {\n    switch (action.type) {\n        case 'SAMPLE':\n            return {count: state.count + 1};\n        default:\n            return state;\n    }\n}\n```"} handleTextContentChange={() => {}} onChange={action('editor content changed')} />
+  </Story>
+</Preview>
