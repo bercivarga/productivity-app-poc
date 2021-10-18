@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { GlobalStyle, defaultTheme, darkTheme } from "./components/utils";
-import { PrimaryButton, SecondaryButton, AlertButton } from "./components/base";
+import { PrimaryButton, SecondaryButton, AlertButton, Header1, Paragraph } from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import { ThemeProvider } from "styled-components";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_"
+const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
 
 function App(): JSX.Element {
   const [useDarkTheme, setUseDarkTheme] = useState<boolean>(false);
@@ -28,19 +29,28 @@ function App(): JSX.Element {
   }
 
   return (
-    <>
-      <ThemeProvider theme={useDarkTheme ? darkTheme : defaultTheme}>
-        <GlobalStyle />
-        <MarkDownEditor
-          viewEditor={viewEditor}
-          textContent={textContent}
-          handleTextContentChange={handleTextContentChange}
-        />
-        <SecondaryButton onClick={changeTheme}>Change theme</SecondaryButton>
-        <AlertButton onClick={handleClearTextContent}>Delete</AlertButton>
-        <PrimaryButton onClick={changeEditorView}>Toggle .md</PrimaryButton>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={useDarkTheme ? darkTheme : defaultTheme}>
+      <GlobalStyle />
+      <Router>
+        <Switch>
+          <Route path={"/editor"}>
+            <Link to={"/"}><SecondaryButton>HOME</SecondaryButton></Link>
+            <MarkDownEditor
+              viewEditor={viewEditor}
+              textContent={textContent}
+              handleTextContentChange={handleTextContentChange}
+            />
+            <AlertButton onClick={handleClearTextContent}>Delete</AlertButton>
+            <PrimaryButton onClick={changeEditorView}>Toggle .md</PrimaryButton>
+          </Route>
+          <Route path={"/"} exact>
+            <Header1>Home page</Header1>
+            <Link to={"/editor"}><Paragraph>To the editor.</Paragraph></Link>
+            <SecondaryButton onClick={changeTheme}>Change theme</SecondaryButton>
+          </Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 
