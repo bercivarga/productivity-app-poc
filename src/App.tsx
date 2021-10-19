@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { GlobalStyle, defaultTheme, darkTheme } from "./components/utils";
-import { PrimaryButton, SecondaryButton, AlertButton, Header1, Paragraph } from "./components/base";
+import { Navbar, PrimaryButton, AlertButton, Header1 } from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import { ThemeProvider } from "styled-components";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
 
@@ -28,27 +28,58 @@ function App(): JSX.Element {
     setTextContent("");
   }
 
+  function Settings(): JSX.Element {
+    return <Header1>Settings</Header1>;
+  }
+
+  function NoMatch(): JSX.Element {
+    return <Header1>404 - No path found</Header1>;
+  }
+
   return (
     <ThemeProvider theme={useDarkTheme ? darkTheme : defaultTheme}>
       <GlobalStyle />
       <Router>
-        <Switch>
-          <Route path={"/editor"}>
-            <Link to={"/"}><SecondaryButton>HOME</SecondaryButton></Link>
-            <MarkDownEditor
-              viewEditor={viewEditor}
-              textContent={textContent}
-              handleTextContentChange={handleTextContentChange}
-            />
-            <AlertButton onClick={handleClearTextContent}>Delete</AlertButton>
-            <PrimaryButton onClick={changeEditorView}>Toggle .md</PrimaryButton>
-          </Route>
-          <Route path={"/"} exact>
-            <Header1>Home page</Header1>
-            <Link to={"/editor"}><Paragraph>To the editor.</Paragraph></Link>
-            <SecondaryButton onClick={changeTheme}>Change theme</SecondaryButton>
-          </Route>
-        </Switch>
+        <Navbar changeTheme={changeTheme} />
+        <main>
+          <Switch>
+            <Route path={"/editor"}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "16px",
+                }}
+              >
+                <MarkDownEditor
+                  viewEditor={viewEditor}
+                  textContent={textContent}
+                  handleTextContentChange={handleTextContentChange}
+                  darkMode={useDarkTheme}
+                />
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "8px" }}
+                >
+                  <AlertButton onClick={handleClearTextContent}>
+                    Delete
+                  </AlertButton>
+                  <PrimaryButton onClick={changeEditorView}>
+                    Toggle .md
+                  </PrimaryButton>
+                </div>
+              </div>
+            </Route>
+            <Route path={"/settings"}>
+              <Settings />
+            </Route>
+            <Route path={"/"} exact>
+              <Header1>Home page</Header1>
+            </Route>
+            <Route path={"*"}>
+              <NoMatch />
+            </Route>
+          </Switch>
+        </main>
       </Router>
     </ThemeProvider>
   );

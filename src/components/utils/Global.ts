@@ -22,6 +22,10 @@ export const GlobalStyle = createGlobalStyle`
     transition: background-color .5s ease-in-out;
   }
   
+  main {
+    padding: 24px 48px;
+  }
+  
   p, span, h1, h2, h3, h4, h5 {
     color: ${(props: ThemeProps<ITheme>) => props.theme.textColor};
   }
