@@ -1,0 +1,18 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import {Navbar} from "./Navbar";
+
+<Meta title="Navigation" component={Navbar} />
+
+# Navbar
+
+The navbar is used as the main interface for navigation in the app.
+
+## Usage
+
+The navbar is included on all pages in order to allow users to navigate the app efficiently. Placed at the root of the app.
+
+<Preview withToolbar>
+  <Story name="Navbar">
+    <Navbar changeTheme={() => {}} />
+  </Story>
+</Preview>
