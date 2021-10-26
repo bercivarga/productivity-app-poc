@@ -1,15 +1,10 @@
-import {RootState} from "./store";
-import {Action} from "@reduxjs/toolkit";
-import {LOGSTUFF} from "./actions";
+import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: RootState = {}
-
-export function noteReducer(state: RootState = initialState, action: Action): RootState {
-    switch (action.type) {
-        case LOGSTUFF:
-            console.log('hey');
-            return state;
-        default:
-            return state;
+export const noteReducer = createReducer(0, {
+  logStuff: (state, action: PayloadAction) => {
+    if (action.type === "HEY") {
+      console.log("hey");
+      return state;
     }
-}
+  },
+});

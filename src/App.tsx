@@ -4,6 +4,7 @@ import { Navbar, PrimaryButton, AlertButton, Header1 } from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useAppDispatch } from "./app/hooks";
 
 const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
 
@@ -11,6 +12,8 @@ function App(): JSX.Element {
   const [useDarkTheme, setUseDarkTheme] = useState<boolean>(false);
   const [viewEditor, setViewEditor] = useState<boolean>(true);
   const [textContent, setTextContent] = useState<string>(PLACEHOLDER_TEXT);
+
+  const dispatch = useAppDispatch();
 
   function changeTheme(): void {
     setUseDarkTheme(!useDarkTheme);
@@ -74,6 +77,13 @@ function App(): JSX.Element {
             </Route>
             <Route path={"/"} exact>
               <Header1>Home page</Header1>
+              <PrimaryButton
+                onClick={() => {
+                  dispatch({ type: "HEY" });
+                }}
+              >
+                Log hey
+              </PrimaryButton>
             </Route>
             <Route path={"*"}>
               <NoMatch />
