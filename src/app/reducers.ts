@@ -1,10 +1,10 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
 
-export const noteReducer = createReducer(0, {
-  logStuff: (state, action: PayloadAction) => {
+export const noteReducer = createReducer({count: 0}, {
+  increment: (state, action: PayloadAction) => {
+      console.warn('hey')
     if (action.type === "HEY") {
-      console.log("hey");
-      return state;
+      return {count: state.count++};
     }
   },
 });

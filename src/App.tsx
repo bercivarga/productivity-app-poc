@@ -4,7 +4,8 @@ import { Navbar, PrimaryButton, AlertButton, Header1 } from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useAppDispatch } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import {RootState} from "./app/store";
 
 const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
 
@@ -13,6 +14,7 @@ function App(): JSX.Element {
   const [viewEditor, setViewEditor] = useState<boolean>(true);
   const [textContent, setTextContent] = useState<string>(PLACEHOLDER_TEXT);
 
+  const count = useAppSelector((state: RootState) => state.notes.count);
   const dispatch = useAppDispatch();
 
   function changeTheme(): void {
@@ -78,11 +80,12 @@ function App(): JSX.Element {
             <Route path={"/"} exact>
               <Header1>Home page</Header1>
               <PrimaryButton
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   dispatch({ type: "HEY" });
                 }}
               >
-                Log hey
+                {count}
               </PrimaryButton>
             </Route>
             <Route path={"*"}>
