@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { GlobalStyle, defaultTheme, darkTheme } from "./components/utils";
-import { Navbar, PrimaryButton, AlertButton, Header1, Header2, Paragraph } from "./components/base";
+import {
+  Navbar,
+  PrimaryButton,
+  AlertButton,
+  Header1,
+  Header2,
+  Paragraph,
+} from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useAppSelector } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { noteSlice } from "./app/noteSlice";
 
 const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
 
@@ -12,6 +20,9 @@ function App(): JSX.Element {
   const [useDarkTheme, setUseDarkTheme] = useState<boolean>(false);
   const [viewEditor, setViewEditor] = useState<boolean>(true);
   const [textContent, setTextContent] = useState<string>(PLACEHOLDER_TEXT);
+  const [title, setTitle] = useState<string>(""); // todo move this to the place of the editor
+
+  const dispatch = useAppDispatch();
 
   const notes = useAppSelector((state) => state.notes);
 
@@ -77,6 +88,17 @@ function App(): JSX.Element {
             </Route>
             <Route path={"/"} exact>
               <Header1>Home page</Header1>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  dispatch(noteSlice.actions.add(title));
+                }}
+              >
+                <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </form>
               {notes.map((note) => (
                 <div key={note.id}>
                   <Header2>{note.title}</Header2>
