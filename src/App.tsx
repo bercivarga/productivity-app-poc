@@ -7,6 +7,7 @@ import {
   Header1,
   Header2,
   Paragraph,
+  HelperText,
 } from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import styled, { ThemeProvider } from "styled-components";
@@ -34,6 +35,7 @@ function App(): JSX.Element {
   const [textContent, setTextContent] = useState<string>(PLACEHOLDER_TEXT);
   const [title, setTitle] = useState<string>(""); // todo move this to the place of the editor
   const [content, setContent] = useState<string>(""); // todo move this to the place of the editor
+  const [formError, setFormError] = useState<boolean>(false); // todo move this to the place of the editor
 
   const dispatch = useAppDispatch();
 
@@ -104,6 +106,10 @@ function App(): JSX.Element {
               <InputForm
                 onSubmit={(e) => {
                   e.preventDefault();
+                  if (!title || !content) {
+                    setFormError(true);
+                    return;
+                  }
                   dispatch(noteSlice.actions.add({ title, content }));
                   setTitle("");
                   setContent("");
@@ -112,20 +118,33 @@ function App(): JSX.Element {
                 <ContentInput
                   value={title}
                   placeholder={"Title"}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => {
+                    if (formError) setFormError(false);
+                    setTitle(e.target.value);
+                  }}
                 />
                 <ContentInput
                   value={content}
                   placeholder={"Content"}
-                  onChange={(e) => setContent(e.target.value)}
+                  onChange={(e) => {
+                    if (formError) setFormError(false);
+                    setContent(e.target.value);
+                  }}
                 />
+                {formError && (
+                  <HelperText>Please fill in all the fields.</HelperText>
+                )}
                 <PrimaryButton>Submit</PrimaryButton>
               </InputForm>
               {notes.map((note) => (
                 <div key={note.id}>
                   <Header2>{note.title}</Header2>
                   <Paragraph>{note.content}</Paragraph>
-                  <AlertButton onClick={() => dispatch(noteSlice.actions.remove(note.id))}>Remove</AlertButton>
+                  <AlertButton
+                    onClick={() => dispatch(noteSlice.actions.remove(note.id))}
+                  >
+                    Remove
+                  </AlertButton>
                 </div>
               ))}
             </Route>
