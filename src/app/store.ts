@@ -1,9 +1,11 @@
-import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
-import {noteSlice} from "./noteSlice";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { noteSlice } from "./noteSlice";
+import { themeSlice } from "./themeSlice";
 
 export const store = configureStore({
   reducer: {
-    notes: noteSlice.reducer
+    darkTheme: themeSlice.reducer,
+    notes: noteSlice.reducer,
   },
 });
 

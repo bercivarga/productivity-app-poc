@@ -1,61 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { GlobalStyle, defaultTheme, darkTheme } from "./components/utils";
-import {
-  Navbar,
-  PrimaryButton,
-  AlertButton,
-  Header1,
-  Header2,
-  Paragraph,
-  HelperText,
-} from "./components/base";
-import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
-import styled, { ThemeProvider } from "styled-components";
+import { Navbar, Header1 } from "./components/base";
+import { ThemeProvider } from "styled-components";
+import { themeSlice } from "./app/themeSlice";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HomePage from "./components/HomePage/HomePage";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { noteSlice } from "./app/noteSlice";
-
-const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
-
-export const InputForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
-`;
-
-export const ContentInput = styled.input`
-  padding: 8px 16px;
-  line-height: 150%;
-`;
+import Editor from "./components/Editor/Editor";
 
 function App(): JSX.Element {
-  const [useDarkTheme, setUseDarkTheme] = useState<boolean>(false);
-  const [viewEditor, setViewEditor] = useState<boolean>(true);
-  const [textContent, setTextContent] = useState<string>(PLACEHOLDER_TEXT);
-  const [title, setTitle] = useState<string>(""); // todo move this to the place of the editor
-  const [content, setContent] = useState<string>(""); // todo move this to the place of the editor
-  const [formError, setFormError] = useState<boolean>(false); // todo move this to the place of the editor
-
+  const isDarkTheme = useAppSelector((state) => state.darkTheme);
   const dispatch = useAppDispatch();
-
-  const notes = useAppSelector((state) => state.notes);
-
-  function changeTheme(): void {
-    setUseDarkTheme(!useDarkTheme);
-  }
-
-  function changeEditorView(): void {
-    setViewEditor(!viewEditor);
-  }
-
-  function handleTextContentChange(text: string): void {
-    setTextContent(text);
-  }
-
-  function handleClearTextContent(): void {
-    setTextContent("");
-  }
 
   function Settings(): JSX.Element {
     return <Header1>Settings</Header1>;
@@ -66,87 +21,22 @@ function App(): JSX.Element {
   }
 
   return (
-    <ThemeProvider theme={useDarkTheme ? darkTheme : defaultTheme}>
+    <ThemeProvider theme={isDarkTheme ? darkTheme : defaultTheme}>
       <GlobalStyle />
       <Router>
-        <Navbar changeTheme={changeTheme} />
+        <Navbar
+          changeTheme={() => dispatch(themeSlice.actions.switchTheme())}
+        />
         <main>
           <Switch>
             <Route path={"/editor"}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "16px",
-                }}
-              >
-                <MarkDownEditor
-                  viewEditor={viewEditor}
-                  textContent={textContent}
-                  handleTextContentChange={handleTextContentChange}
-                  darkMode={useDarkTheme}
-                />
-                <div
-                  style={{ display: "flex", flexDirection: "row", gap: "8px" }}
-                >
-                  <AlertButton onClick={handleClearTextContent}>
-                    Delete
-                  </AlertButton>
-                  <PrimaryButton onClick={changeEditorView}>
-                    Toggle .md
-                  </PrimaryButton>
-                </div>
-              </div>
+              <Editor />
             </Route>
             <Route path={"/settings"}>
               <Settings />
             </Route>
             <Route path={"/"} exact>
-              <Header1>Home page</Header1>
-              <InputForm
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!title || !content) {
-                    setFormError(true);
-                    return;
-                  }
-                  dispatch(noteSlice.actions.add({ title, content }));
-                  setTitle("");
-                  setContent("");
-                }}
-              >
-                <ContentInput
-                  value={title}
-                  placeholder={"Title"}
-                  onChange={(e) => {
-                    if (formError) setFormError(false);
-                    setTitle(e.target.value);
-                  }}
-                />
-                <ContentInput
-                  value={content}
-                  placeholder={"Content"}
-                  onChange={(e) => {
-                    if (formError) setFormError(false);
-                    setContent(e.target.value);
-                  }}
-                />
-                {formError && (
-                  <HelperText>Please fill in all the fields.</HelperText>
-                )}
-                <PrimaryButton>Submit</PrimaryButton>
-              </InputForm>
-              {notes.map((note) => (
-                <div key={note.id}>
-                  <Header2>{note.title}</Header2>
-                  <Paragraph>{note.content}</Paragraph>
-                  <AlertButton
-                    onClick={() => dispatch(noteSlice.actions.remove(note.id))}
-                  >
-                    Remove
-                  </AlertButton>
-                </div>
-              ))}
+              <HomePage />
             </Route>
             <Route path={"*"}>
               <NoMatch />
