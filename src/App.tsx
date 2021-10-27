@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { GlobalStyle, defaultTheme, darkTheme } from "./components/utils";
-import { Navbar, PrimaryButton, AlertButton, Header1 } from "./components/base";
+import { Navbar, PrimaryButton, AlertButton, Header1, Header2, Paragraph } from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "./app/hooks";
-import {RootState} from "./app/store";
+import { useAppSelector } from "./app/hooks";
 
 const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
 
@@ -14,8 +13,7 @@ function App(): JSX.Element {
   const [viewEditor, setViewEditor] = useState<boolean>(true);
   const [textContent, setTextContent] = useState<string>(PLACEHOLDER_TEXT);
 
-  const count = useAppSelector((state: RootState) => state.notes.count);
-  const dispatch = useAppDispatch();
+  const notes = useAppSelector((state) => state.notes);
 
   function changeTheme(): void {
     setUseDarkTheme(!useDarkTheme);
@@ -79,14 +77,12 @@ function App(): JSX.Element {
             </Route>
             <Route path={"/"} exact>
               <Header1>Home page</Header1>
-              <PrimaryButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  dispatch({ type: "HEY" });
-                }}
-              >
-                {count}
-              </PrimaryButton>
+              {notes.map((note) => (
+                <div key={note.id}>
+                  <Header2>{note.title}</Header2>
+                  <Paragraph>{note.content}</Paragraph>
+                </div>
+              ))}
             </Route>
             <Route path={"*"}>
               <NoMatch />
