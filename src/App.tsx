@@ -9,18 +9,31 @@ import {
   Paragraph,
 } from "./components/base";
 import MarkDownEditor from "./components/MarkDownEditor/MarkDownEditor";
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { noteSlice } from "./app/noteSlice";
 
 const PLACEHOLDER_TEXT = "_Spill your toughs by writing in the editor_";
 
+export const InputForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+`;
+
+export const ContentInput = styled.input`
+  padding: 8px 16px;
+  line-height: 150%;
+`;
+
 function App(): JSX.Element {
   const [useDarkTheme, setUseDarkTheme] = useState<boolean>(false);
   const [viewEditor, setViewEditor] = useState<boolean>(true);
   const [textContent, setTextContent] = useState<string>(PLACEHOLDER_TEXT);
   const [title, setTitle] = useState<string>(""); // todo move this to the place of the editor
+  const [content, setContent] = useState<string>(""); // todo move this to the place of the editor
 
   const dispatch = useAppDispatch();
 
@@ -88,21 +101,31 @@ function App(): JSX.Element {
             </Route>
             <Route path={"/"} exact>
               <Header1>Home page</Header1>
-              <form
+              <InputForm
                 onSubmit={(e) => {
                   e.preventDefault();
-                  dispatch(noteSlice.actions.add(title));
+                  dispatch(noteSlice.actions.add({ title, content }));
+                  setTitle("");
+                  setContent("");
                 }}
               >
-                <input
+                <ContentInput
                   value={title}
+                  placeholder={"Title"}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-              </form>
+                <ContentInput
+                  value={content}
+                  placeholder={"Content"}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+                <PrimaryButton>Submit</PrimaryButton>
+              </InputForm>
               {notes.map((note) => (
                 <div key={note.id}>
                   <Header2>{note.title}</Header2>
                   <Paragraph>{note.content}</Paragraph>
+                  <AlertButton onClick={() => dispatch(noteSlice.actions.remove(note.id))}>Remove</AlertButton>
                 </div>
               ))}
             </Route>
