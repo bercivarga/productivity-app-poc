@@ -1,0 +1,28 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import {action} from "@storybook/addon-actions";
+import {withKnobs, boolean} from "@storybook/addon-knobs";
+import { Input } from './InputFields';
+
+<Meta title="Input fields" component={Input} />
+
+const
+
+# Input fields
+
+Fields that allow users to add custom data via their hardware.
+
+## Usage
+
+Input fields are used when a user is required to supply data to the platform in order for another action to be able to fire.
+
+## Base input
+
+<Preview withToolbar>
+  <Story name="Base">
+    <Input
+        disabled={boolean('Disabled', false)}
+        placeholder={'Your input comes here'}
+        onChange={action('input-change')}
+    />
+  </Story>
+</Preview>

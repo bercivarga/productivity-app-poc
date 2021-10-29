@@ -6,21 +6,17 @@ import {
   HelperText,
   Paragraph,
   PrimaryButton,
+  Input,
 } from "../base";
 import { noteSlice } from "../../app/noteSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import styled from "styled-components";
 
-export const InputForm = styled.form`
+export const HomePageForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
-`;
-
-export const ContentInput = styled.input`
-  padding: 8px 16px;
-  line-height: 150%;
 `;
 
 export default function HomePage(): JSX.Element {
@@ -35,7 +31,7 @@ export default function HomePage(): JSX.Element {
   return (
     <>
       <Header1>Home page</Header1>
-      <InputForm
+      <HomePageForm
         onSubmit={(e) => {
           e.preventDefault();
           if (!title || !content) {
@@ -47,7 +43,7 @@ export default function HomePage(): JSX.Element {
           setContent("");
         }}
       >
-        <ContentInput
+        <Input
           value={title}
           placeholder={"Title"}
           onChange={(e) => {
@@ -55,7 +51,7 @@ export default function HomePage(): JSX.Element {
             setTitle(e.target.value);
           }}
         />
-        <ContentInput
+        <Input
           value={content}
           placeholder={"Content"}
           onChange={(e) => {
@@ -65,7 +61,7 @@ export default function HomePage(): JSX.Element {
         />
         {formError && <HelperText>Please fill in all the fields.</HelperText>}
         <PrimaryButton>Submit</PrimaryButton>
-      </InputForm>
+      </HomePageForm>
       {notes.map((note) => (
         <div key={note.id}>
           <Header2>{note.title}</Header2>
