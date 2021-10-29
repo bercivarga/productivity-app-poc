@@ -8,7 +8,7 @@ import {
   PrimaryButton,
   Input,
 } from "../base";
-import { noteSlice } from "../../app/noteSlice";
+import { noteSlice, getTimeObject } from "../../app/noteSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import styled from "styled-components";
 
@@ -38,7 +38,7 @@ export default function HomePage(): JSX.Element {
             setFormError(true);
             return;
           }
-          dispatch(noteSlice.actions.add({ title, content }));
+          dispatch(noteSlice.actions.add({ title, content, time: getTimeObject() }));
           setTitle("");
           setContent("");
         }}
@@ -65,7 +65,8 @@ export default function HomePage(): JSX.Element {
       {notes.map((note) => (
         <div key={note.id}>
           <Header2>{note.title}</Header2>
-          <Paragraph>{note.content}</Paragraph>
+          <Paragraph>{note.time.hour}:{note.time.minute < 10 ? `0${note.time.minute}` : note.time.minute} | {note.time.day}/{note.time.month + 1}/{note.time.year}</Paragraph>
+          <Paragraph>{note.time.creationTime}</Paragraph>
           <AlertButton
             onClick={() => dispatch(noteSlice.actions.remove(note.id))}
           >
