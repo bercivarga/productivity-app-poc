@@ -4,6 +4,8 @@ import { primaryFont } from "./typography";
 export interface ITheme {
   backgroundColor: string;
   editorColor: string;
+  shadowColor: string;
+  shadowColorOnHover: string;
   primaryColor: string;
   primaryColorHover: string;
   primaryColorActive: string;
@@ -24,6 +26,8 @@ export interface ITheme {
 export const defaultTheme: ITheme = {
   backgroundColor: "#f8f8ff",
   editorColor: "#ffffff",
+  shadowColor: "rgba(0, 0, 0, 0.1)",
+  shadowColorOnHover: "rgba(0, 0, 0, 0.3)",
   primaryColor: blue[300],
   primaryColorHover: blue[200],
   primaryColorActive: blue[100],
@@ -44,6 +48,8 @@ export const defaultTheme: ITheme = {
 export const darkTheme: ITheme = {
   backgroundColor: "#121212",
   editorColor: "#444444",
+  shadowColor: "rgba(250, 250, 250, 0)",
+  shadowColorOnHover: "rgba(250, 250, 250, 0.1)",
   primaryColor: neutral[100],
   primaryColorHover: neutral[200],
   primaryColorActive: neutral[100],

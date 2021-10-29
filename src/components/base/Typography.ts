@@ -4,7 +4,8 @@ import {typeScale, ITheme} from "../utils";
 export const Paragraph = styled.p`
   font-size: ${typeScale.paragraph};
   font-family: ${(props: ThemeProps<ITheme>) => props.theme.primaryFont};
-  color: ${(props: ThemeProps<ITheme>) => props.theme.textColor}
+  color: ${(props: ThemeProps<ITheme>) => props.theme.textColor};
+  margin: 0;
 `
 
 export const Header1 = styled.h1`
@@ -16,7 +17,7 @@ export const Header1 = styled.h1`
 export const Header2 = styled.h2`
   font-size: ${typeScale.header2};
   font-family: ${(props: ThemeProps<ITheme>) => props.theme.primaryFont};
-  color: ${(props: ThemeProps<ITheme>) => props.theme.textColor}
+  color: ${(props: ThemeProps<ITheme>) => props.theme.textColor};
 `
 
 export const Header3 = styled.h3`

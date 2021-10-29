@@ -10,13 +10,56 @@ import {
 } from "../base";
 import { noteSlice, getTimeObject } from "../../app/noteSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import styled from "styled-components";
+import styled, { ThemeProps } from "styled-components";
+import { ITheme } from "../utils";
 
 export const HomePageForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+  margin-bottom: 16px;
+`;
+
+export const NotesThumbnailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const TimeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const NotesThumbnailRightContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const NoteThumbnail = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 8px 16px;
+  background-color: ${(props: ThemeProps<ITheme>) => props.theme.editorColor};
+  border: none;
+  border-radius: 8px;
+  box-shadow: ${(props: ThemeProps<ITheme>) => props.theme.shadowColor} 0 4px
+    12px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: ${(props: ThemeProps<ITheme>) => props.theme.shadowColorOnHover}
+      0 4px 12px;
+  }
 `;
 
 export default function HomePage(): JSX.Element {
@@ -38,7 +81,9 @@ export default function HomePage(): JSX.Element {
             setFormError(true);
             return;
           }
-          dispatch(noteSlice.actions.add({ title, content, time: getTimeObject() }));
+          dispatch(
+            noteSlice.actions.add({ title, content, time: getTimeObject() })
+          );
           setTitle("");
           setContent("");
         }}
@@ -62,18 +107,39 @@ export default function HomePage(): JSX.Element {
         {formError && <HelperText>Please fill in all the fields.</HelperText>}
         <PrimaryButton>Submit</PrimaryButton>
       </HomePageForm>
-      {notes.map((note) => (
-        <div key={note.id}>
-          <Header2>{note.title}</Header2>
-          <Paragraph>{note.time.hour}:{note.time.minute < 10 ? `0${note.time.minute}` : note.time.minute} | {note.time.day}/{note.time.month + 1}/{note.time.year}</Paragraph>
-          <Paragraph>{note.time.creationTime}</Paragraph>
-          <AlertButton
-            onClick={() => dispatch(noteSlice.actions.remove(note.id))}
-          >
-            Remove
-          </AlertButton>
-        </div>
-      ))}
+      <NotesThumbnailContainer>
+        {notes.map((note) => (
+          <NoteThumbnail key={note.id}>
+            <Header2
+              style={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {note.title}
+            </Header2>
+            <NotesThumbnailRightContent>
+              <TimeContainer>
+                <Paragraph>
+                  {note.time.hour}:
+                  {note.time.minute < 10
+                    ? `0${note.time.minute}`
+                    : note.time.minute}{" "}
+                </Paragraph>
+                <Paragraph>
+                  {note.time.day}/{note.time.month + 1}/{note.time.year}
+                </Paragraph>
+              </TimeContainer>
+              <AlertButton
+                onClick={() => dispatch(noteSlice.actions.remove(note.id))}
+              >
+                Remove
+              </AlertButton>
+            </NotesThumbnailRightContent>
+          </NoteThumbnail>
+        ))}
+      </NotesThumbnailContainer>
     </>
   );
 }
