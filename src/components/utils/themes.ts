@@ -49,7 +49,7 @@ export const darkTheme: ITheme = {
   backgroundColor: "#121212",
   editorColor: "#444444",
   shadowColor: "rgba(250, 250, 250, 0)",
-  shadowColorOnHover: "rgba(250, 250, 250, 0.1)",
+  shadowColorOnHover: "rgba(250, 250, 250, 0.2)",
   primaryColor: neutral[100],
   primaryColorHover: neutral[200],
   primaryColorActive: neutral[100],

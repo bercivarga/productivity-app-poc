@@ -1,0 +1,78 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import {
+  NotesThumbnailContainer,
+  NoteThumbnail,
+  NotesThumbnailRightContent,
+  TimeContainer
+} from './HomePage';
+import {
+  AlertButton,
+  Header2,
+  Paragraph
+} from "../base";
+import {action} from "@storybook/addon-actions";
+
+<Meta title="Home page notes" component={NotesThumbnailContainer} />
+
+# Home page components
+
+Fields that allow users to add custom data via their hardware.
+
+<Preview withToolbar>
+  <Story name="Note thumbnail">
+    <NotesThumbnailContainer>
+      <NoteThumbnail>
+        <Header2
+          style={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          My super awesome note
+        </Header2>
+        <NotesThumbnailRightContent>
+          <TimeContainer>
+            <Paragraph>
+              20:45
+            </Paragraph>
+            <Paragraph>
+              12/08/2021
+            </Paragraph>
+          </TimeContainer>
+          <AlertButton
+            onClick={action('delete-button-click')}
+          >
+            Remove
+          </AlertButton>
+        </NotesThumbnailRightContent>
+      </NoteThumbnail>
+      <NoteThumbnail>
+        <Header2
+          style={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          My super awesome note that has a really long title which should cut off at max length and the last characters are replaced by "...".
+        </Header2>
+        <NotesThumbnailRightContent>
+          <TimeContainer>
+            <Paragraph>
+              20:45
+            </Paragraph>
+            <Paragraph>
+              12/08/2021
+            </Paragraph>
+          </TimeContainer>
+          <AlertButton
+            onClick={action('delete-button-click')}
+          >
+            Remove
+          </AlertButton>
+        </NotesThumbnailRightContent>
+      </NoteThumbnail>
+      </NotesThumbnailContainer>
+  </Story>
+</Preview>
