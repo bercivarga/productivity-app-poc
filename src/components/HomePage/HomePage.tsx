@@ -8,7 +8,7 @@ import {
   PrimaryButton,
   Input,
 } from "../base";
-import { noteSlice, getTimeObject } from "../../app/noteSlice";
+import { noteSlice, getTimeObject, INote } from "../../app/noteSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import styled, { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
@@ -71,6 +71,14 @@ export default function HomePage(): JSX.Element {
 
   const notes = useAppSelector((state) => state.notes);
 
+  function sortNotes(notes: INote[]): INote[] {
+    const notesCopy = Array.from(notes);
+    const sortedNotes = notesCopy.sort((note1, note2) => {
+      return note2.time.creationTime - note1.time.creationTime;
+    });
+    return sortedNotes;
+  }
+
   return (
     <>
       <Header1>Home page</Header1>
@@ -108,7 +116,7 @@ export default function HomePage(): JSX.Element {
         <PrimaryButton>Submit</PrimaryButton>
       </HomePageForm>
       <NotesThumbnailContainer>
-        {notes.map((note) => (
+        {sortNotes(notes).map((note) => (
           <NoteThumbnail key={note.id}>
             <Header2
               style={{

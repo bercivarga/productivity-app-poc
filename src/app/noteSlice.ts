@@ -9,6 +9,13 @@ export interface ITime {
   creationTime: number
 }
 
+export interface INote {
+  id: string;
+  title: string;
+  content: string;
+  time: ITime;
+}
+
 export function getTimeObject(): ITime {
   return {
     minute: new Date().getMinutes(),
@@ -23,7 +30,7 @@ export function getTimeObject(): ITime {
 const lipsum =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
-function createNote(title: string, content: string, time: ITime) {
+function createNote(title: string, content: string, time: ITime): INote {
   return {
     id: nanoid(),
     title,
