@@ -12,6 +12,7 @@ import { noteSlice, getTimeObject, INote } from "../../app/noteSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import styled, { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
+import MarkDownModal from "../MarkdownModal/MarkdownModal";
 
 export const HomePageForm = styled.form`
   display: flex;
@@ -66,6 +67,12 @@ export default function HomePage(): JSX.Element {
   const [title, setTitle] = useState<string>(""); // todo move this to the place of the editor
   const [content, setContent] = useState<string>(""); // todo move this to the place of the editor
   const [formError, setFormError] = useState<boolean>(false); // todo move this to the place of the editor
+  const [showNoteModal, setShowNoteModal] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState({
+    id: "0",
+    title: "",
+    content: "",
+  });
 
   const dispatch = useAppDispatch();
 
@@ -77,6 +84,14 @@ export default function HomePage(): JSX.Element {
       return note2.time.creationTime - note1.time.creationTime;
     });
     return sortedNotes;
+  }
+
+  function handleModal(
+    show: boolean,
+    content: { id: string; title: string; content: string }
+  ) {
+    setModalContent(content);
+    setShowNoteModal(show);
   }
 
   return (
@@ -115,9 +130,20 @@ export default function HomePage(): JSX.Element {
         {formError && <HelperText>Please fill in all the fields.</HelperText>}
         <PrimaryButton>Submit</PrimaryButton>
       </HomePageForm>
+      {showNoteModal && (
+        <MarkDownModal
+          id={modalContent.id}
+          title={modalContent.title}
+          content={modalContent.content}
+          handleModal={handleModal}
+        />
+      )}
       <NotesThumbnailContainer>
         {sortNotesByCreationTime(notes).map((note) => (
-          <NoteThumbnail key={note.id}>
+          <NoteThumbnail
+            key={note.id}
+            onClick={() => handleModal(true, {id: note.id, title: note.title, content: note.content})}
+          >
             <Header2
               style={{
                 whiteSpace: "nowrap",

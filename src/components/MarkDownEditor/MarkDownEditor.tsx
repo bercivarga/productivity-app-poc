@@ -2,12 +2,12 @@ import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import styled, { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
+import { useAppSelector } from "../../app/hooks";
 
 export interface IMarkDownEditor {
   viewEditor: boolean;
   textContent: string;
   handleTextContentChange: (text: string) => void;
-  darkMode: boolean;
 }
 
 const MDEditorWrapper = styled.div`
@@ -18,7 +18,9 @@ const MDEditorWrapper = styled.div`
 `;
 
 export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
-  const { viewEditor, textContent, handleTextContentChange, darkMode } = props;
+  const { viewEditor, textContent, handleTextContentChange } = props;
+
+  const darkMode = useAppSelector(state => state.darkTheme)
 
   function changeTextContent(value: string | undefined): void {
     if (!value) return;

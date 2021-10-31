@@ -63,5 +63,13 @@ export const noteSlice = createSlice({
     remove: (state, action: PayloadAction<string>) => {
       return state.filter((note) => note.id !== action.payload);
     },
+    changeTitle: (state, action: PayloadAction<{id: string, newTitle: string }>) => {
+      const selectedNote = state.find(note => note.id === action.payload.id);
+      if (selectedNote && selectedNote.title) selectedNote.title = action.payload.newTitle;
+    },
+    changeContent: (state, action: PayloadAction<{id: string, newContent: string}>) => {
+      const selectedNote = state.find(note => note.id === action.payload.id);
+      if (selectedNote && selectedNote.content) selectedNote.content = action.payload.newContent;
+    }
   },
 });
