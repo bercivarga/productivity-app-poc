@@ -71,7 +71,7 @@ export default function HomePage(): JSX.Element {
 
   const notes = useAppSelector((state) => state.notes);
 
-  function sortNotes(notes: INote[]): INote[] {
+  function sortNotesByCreationTime(notes: INote[]): INote[] {
     const notesCopy = Array.from(notes);
     const sortedNotes = notesCopy.sort((note1, note2) => {
       return note2.time.creationTime - note1.time.creationTime;
@@ -116,7 +116,7 @@ export default function HomePage(): JSX.Element {
         <PrimaryButton>Submit</PrimaryButton>
       </HomePageForm>
       <NotesThumbnailContainer>
-        {sortNotes(notes).map((note) => (
+        {sortNotesByCreationTime(notes).map((note) => (
           <NoteThumbnail key={note.id}>
             <Header2
               style={{
