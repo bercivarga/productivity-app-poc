@@ -68,6 +68,7 @@ export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 				</button>
 				<Header1>{title}</Header1>
 				<MarkDownEditor
+					id={id}
 					viewEditor={showEditor}
 					textContent={content}
 					handleTextContentChange={handleContentChange}

@@ -29,6 +29,7 @@ export default function Editor(): JSX.Element {
       }}
     >
       <MarkDownEditor
+        id={''}
         viewEditor={viewEditor}
         textContent={textContent}
         handleTextContentChange={handleTextContentChange}

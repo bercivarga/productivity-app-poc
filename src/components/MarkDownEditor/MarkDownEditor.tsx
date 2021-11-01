@@ -5,6 +5,7 @@ import { ITheme } from "../utils";
 import { useAppSelector } from "../../app/hooks";
 
 export interface IMarkDownEditor {
+  id: string;
   viewEditor: boolean;
   textContent: string;
   handleTextContentChange: (text: string) => void;
@@ -18,9 +19,10 @@ const MDEditorWrapper = styled.div`
 `;
 
 export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
-  const { viewEditor, textContent, handleTextContentChange } = props;
+  const { id, viewEditor, handleTextContentChange } = props;
 
   const darkMode = useAppSelector(state => state.darkTheme)
+  const selectedNote = useAppSelector(state => state.notes.find(note => note.id === id))
 
   function changeTextContent(value: string | undefined): void {
     if (!value) return;
@@ -31,7 +33,7 @@ export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
     <MDEditorWrapper>
       {viewEditor ? (
         <MDEditor
-          value={textContent}
+          value={selectedNote?.content}
           style={{
             borderRadius: 0,
             backgroundColor: `${darkMode ? "#444444" : "#ffffff"}`,
@@ -41,7 +43,7 @@ export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
           onChange={changeTextContent}
         />
       ) : (
-        <MDEditor.Markdown style={{ padding: "24px" }} source={textContent} />
+        <MDEditor.Markdown style={{ padding: "24px" }} source={selectedNote?.content} />
       )}
     </MDEditorWrapper>
   );
