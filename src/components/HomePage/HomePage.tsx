@@ -142,7 +142,13 @@ export default function HomePage(): JSX.Element {
         {sortNotesByCreationTime(notes).map((note) => (
           <NoteThumbnail
             key={note.id}
-            onClick={() => handleModal(true, {id: note.id, title: note.title, content: note.content})}
+            onClick={() =>
+              handleModal(true, {
+                id: note.id,
+                title: note.title,
+                content: note.content,
+              })
+            }
           >
             <Header2
               style={{
