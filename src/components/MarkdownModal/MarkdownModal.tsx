@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { SecondaryButton, CloseButton } from "../base";
 import MarkDownEditor from "../MarkDownEditor/MarkDownEditor";
 
 export interface IMarkDownModal {
@@ -22,6 +23,7 @@ const ModalContainer = styled.a`
 `;
 
 const EditorWrapper = styled.div`
+	width: 800px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -31,6 +33,15 @@ const EditorWrapper = styled.div`
 	padding: 48px;
 `;
 
+const ButtonsWrapper = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 16px;
+`
+
 export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 	const [showEditor, setShowEditor] = useState<boolean>(false);
 	const { id, handleModal } = props;
@@ -38,12 +49,16 @@ export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 	return (
 		<ModalContainer onClick={() => handleModal(false, "0")}>
 			<EditorWrapper onClick={(e) => e.stopPropagation()}>
-				<button type="button" onClick={() => handleModal(false, "0")}>
-					Close
-				</button>
-				<button type="button" onClick={() => setShowEditor(!showEditor)}>
-					Switch view
-				</button>
+			<ButtonsWrapper>
+				<SecondaryButton type="button" onClick={() => setShowEditor(!showEditor)}>
+					Toggle Markdown
+				</SecondaryButton>
+				<CloseButton type="button" onClick={() => handleModal(false, "0")}>
+					<svg viewBox="0 0 24 24">
+    					<path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+					</svg>
+				</CloseButton>
+			</ButtonsWrapper>
 				<MarkDownEditor id={id} viewEditor={showEditor} />
 			</EditorWrapper>
 		</ModalContainer>

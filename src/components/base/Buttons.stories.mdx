@@ -1,7 +1,7 @@
 import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
 import {action} from "@storybook/addon-actions";
 import {withKnobs, boolean} from "@storybook/addon-knobs";
-import {Button, PrimaryButton, SecondaryButton, AlertButton} from "./Buttons";
+import {Button, PrimaryButton, SecondaryButton, AlertButton, CloseButton} from "./Buttons";
 
 <Meta title="Buttons" component={Button} />
 
@@ -50,5 +50,15 @@ Alert buttons are used to warn the user of an action having significant effects.
 <Preview withToolbar>
     <Story name="Alert">
         <AlertButton disabled={boolean('Disabled', false)} onClick={action('button-click')}>Alert</AlertButton>
+    </Story>
+</Preview>
+
+<Preview withToolbar>
+    <Story name="Close">
+        <CloseButton disabled={boolean('Disabled', false)} onClick={action('button-click')}>
+            <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+            </svg>
+        </CloseButton>
     </Story>
 </Preview>

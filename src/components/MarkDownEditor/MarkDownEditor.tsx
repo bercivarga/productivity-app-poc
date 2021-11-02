@@ -17,6 +17,7 @@ const MDEditorWrapper = styled.div`
   caret-color: ${(props: ThemeProps<ITheme>) => props.theme.textColor};
   caret-shape: bar;
   padding: 24px;
+  width: 100%;
 `;
 
 export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
