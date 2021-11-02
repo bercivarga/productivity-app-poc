@@ -68,11 +68,7 @@ export default function HomePage(): JSX.Element {
   const [content, setContent] = useState<string>(""); // todo move this to the place of the editor
   const [formError, setFormError] = useState<boolean>(false); // todo move this to the place of the editor
   const [showNoteModal, setShowNoteModal] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState({
-    id: "0",
-    title: "",
-    content: "",
-  });
+  const [currentNote, setCurrentNote] = useState<string>("0");
 
   const dispatch = useAppDispatch();
 
@@ -81,16 +77,14 @@ export default function HomePage(): JSX.Element {
   function sortNotesByCreationTime(notes: INote[]): INote[] {
     const notesCopy = Array.from(notes);
     const sortedNotes = notesCopy.sort((note1, note2) => {
-      return note2.time.creationTime - note1.time.creationTime;
+      if (!note1?.time || !note2?.time) return 1;
+      return note2?.time.creationTime - note1?.time.creationTime;
     });
     return sortedNotes;
   }
 
-  function handleModal(
-    show: boolean,
-    content: { id: string; title: string; content: string }
-  ) {
-    setModalContent(content);
+  function handleModal(show: boolean, id: string) {
+    setCurrentNote(id);
     setShowNoteModal(show);
   }
 
@@ -131,24 +125,13 @@ export default function HomePage(): JSX.Element {
         <PrimaryButton>Submit</PrimaryButton>
       </HomePageForm>
       {showNoteModal && (
-        <MarkDownModal
-          id={modalContent.id}
-          title={modalContent.title}
-          content={modalContent.content}
-          handleModal={handleModal}
-        />
+        <MarkDownModal id={currentNote} handleModal={handleModal} />
       )}
       <NotesThumbnailContainer>
         {sortNotesByCreationTime(notes).map((note) => (
           <NoteThumbnail
             key={note.id}
-            onClick={() =>
-              handleModal(true, {
-                id: note.id,
-                title: note.title,
-                content: note.content,
-              })
-            }
+            onClick={() => handleModal(true, note.id)}
           >
             <Header2
               style={{
@@ -162,13 +145,14 @@ export default function HomePage(): JSX.Element {
             <NotesThumbnailRightContent>
               <TimeContainer>
                 <Paragraph>
-                  {note.time.hour}:
-                  {note.time.minute < 10
-                    ? `0${note.time.minute}`
-                    : note.time.minute}{" "}
+                  {note?.time?.hour}:
+                  {(note?.time?.minute ?? 0) < 10
+                    ? `0${(note?.time?.minute ?? 0)}`
+                    : note?.time?.minute}{" "}
                 </Paragraph>
                 <Paragraph>
-                  {note.time.day}/{note.time.month + 1}/{note.time.year}
+                  {note?.time?.day}/{(note?.time?.month ?? 0) + 1}/
+                  {note?.time?.year}
                 </Paragraph>
               </TimeContainer>
               <AlertButton

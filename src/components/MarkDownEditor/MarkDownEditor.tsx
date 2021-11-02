@@ -4,6 +4,7 @@ import styled, { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { noteSlice } from "../../app/noteSlice";
+import { Header1 } from "../base";
 
 export interface IMarkDownEditor {
   id: string;
@@ -15,6 +16,7 @@ const MDEditorWrapper = styled.div`
   box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
   caret-color: ${(props: ThemeProps<ITheme>) => props.theme.textColor};
   caret-shape: bar;
+  padding: 24px;
 `;
 
 export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
@@ -27,6 +29,7 @@ export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
 
   return (
     <MDEditorWrapper>
+      <Header1>{selectedNote?.title}</Header1>
       {viewEditor ? (
         <MDEditor
           value={selectedNote?.content}
@@ -36,10 +39,10 @@ export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
           }}
           preview={"edit"}
           hideToolbar
-          onChange={(content) => dispatch(noteSlice.actions.changeContent({id, newContent: (content ?? ' ')}))}
+          onChange={(content) => dispatch(noteSlice.actions.changeContent({id, newContent: content}))}
         />
       ) : (
-        <MDEditor.Markdown style={{ padding: "24px" }} source={selectedNote?.content} />
+        <MDEditor.Markdown source={selectedNote?.content} />
       )}
     </MDEditorWrapper>
   );

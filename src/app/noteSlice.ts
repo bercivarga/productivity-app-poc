@@ -11,9 +11,9 @@ export interface ITime {
 
 export interface INote {
   id: string;
-  title: string;
-  content: string;
-  time: ITime;
+  title: string | undefined;
+  content: string | undefined;
+  time: ITime | undefined;
 }
 
 export function getTimeObject(): ITime {
@@ -67,7 +67,7 @@ export const noteSlice = createSlice({
       const selectedNote = state.find(note => note.id === action.payload.id);
       if (selectedNote && selectedNote.title) selectedNote.title = action.payload.newTitle;
     },
-    changeContent: (state, action: PayloadAction<{id: string, newContent: string}>) => {
+    changeContent: (state, action: PayloadAction<{id: string, newContent: string | undefined}>) => {
       const selectedNote = state.find(note => note.id === action.payload.id);
       if (selectedNote && selectedNote.content) selectedNote.content = action.payload.newContent;
     }
