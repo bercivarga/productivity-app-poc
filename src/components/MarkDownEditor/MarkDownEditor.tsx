@@ -18,6 +18,7 @@ const MDEditorWrapper = styled.div`
   caret-shape: bar;
   padding: 24px;
   width: 100%;
+  border-radius: 4px;
 `;
 
 export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {

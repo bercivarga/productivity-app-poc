@@ -29,4 +29,8 @@ export const GlobalStyle = createGlobalStyle`
   p, span, h1, h2, h3, h4, h5 {
     color: ${(props: ThemeProps<ITheme>) => props.theme.textColor};
   }
+
+  textarea {
+    -webkit-text-fill-color: ${(props: ThemeProps<ITheme>) => props.theme.textColor} !important;
+  }
 `
