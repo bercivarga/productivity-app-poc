@@ -7,7 +7,7 @@ export interface IMarkDownModal {
 	handleModal: (show: boolean, id: string) => void;
 }
 
-const ModalContainer = styled.div`
+const ModalContainer = styled.a`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -36,8 +36,8 @@ export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 	const { id, handleModal } = props;
 
 	return (
-		<ModalContainer>
-			<EditorWrapper>
+		<ModalContainer onClick={() => handleModal(false, "0")}>
+			<EditorWrapper onClick={(e) => e.stopPropagation()}>
 				<button type="button" onClick={() => handleModal(false, "0")}>
 					Close
 				</button>

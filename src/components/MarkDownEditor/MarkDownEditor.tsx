@@ -39,7 +39,7 @@ export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
           }}
           preview={"edit"}
           hideToolbar
-          onChange={(content) => dispatch(noteSlice.actions.changeContent({id, newContent: content}))}
+          onChange={(content) => {console.log(content);dispatch(noteSlice.actions.changeContent({id, newContent: (content ?? '')}))}}
         />
       ) : (
         <MDEditor.Markdown source={selectedNote?.content} />

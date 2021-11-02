@@ -77,8 +77,7 @@ export default function HomePage(): JSX.Element {
   function sortNotesByCreationTime(notes: INote[]): INote[] {
     const notesCopy = Array.from(notes);
     const sortedNotes = notesCopy.sort((note1, note2) => {
-      if (!note1?.time || !note2?.time) return 1;
-      return note2?.time.creationTime - note1?.time.creationTime;
+      return note2.time.creationTime - note1.time.creationTime;
     });
     return sortedNotes;
   }
@@ -145,14 +144,14 @@ export default function HomePage(): JSX.Element {
             <NotesThumbnailRightContent>
               <TimeContainer>
                 <Paragraph>
-                  {note?.time?.hour}:
-                  {(note?.time?.minute ?? 0) < 10
-                    ? `0${(note?.time?.minute ?? 0)}`
-                    : note?.time?.minute}{" "}
+                  {note.time.hour}:
+                  {note.time.minute < 10
+                    ? `0${(note.time.minute)}`
+                    : note.time.minute}{" "}
                 </Paragraph>
                 <Paragraph>
-                  {note?.time?.day}/{(note?.time?.month ?? 0) + 1}/
-                  {note?.time?.year}
+                  {note.time.day}/{note.time.month + 1}/
+                  {note.time.year}
                 </Paragraph>
               </TimeContainer>
               <AlertButton
