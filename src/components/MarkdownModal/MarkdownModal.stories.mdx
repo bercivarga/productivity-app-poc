@@ -1,0 +1,23 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import {action} from "@storybook/addon-actions";
+import {withKnobs, boolean} from "@storybook/addon-knobs";
+import MarkdownModal from "./MarkdownModal";
+
+<Meta title="Markdown modal" component={MarkdownModal} />
+
+# Markdown modal
+
+Markdown modal that lets the user preview a note and make quick basic changes to it.
+
+## Usage
+
+Used in places where the user can write notes in a quick manner.
+
+
+<Preview withToolbar>
+  <Story name="Markdown modal">
+    <MarkdownModal id="123" handleModal={() => {}} />
+  </Story>
+</Preview>
+
+// TODO: add redux container for storybook integration
