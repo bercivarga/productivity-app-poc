@@ -2,13 +2,12 @@ import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import styled, { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { noteSlice } from "../../app/noteSlice";
 
 export interface IMarkDownEditor {
   id: string;
   viewEditor: boolean;
-  textContent: string;
-  handleTextContentChange: (text: string) => void;
 }
 
 const MDEditorWrapper = styled.div`
@@ -19,15 +18,12 @@ const MDEditorWrapper = styled.div`
 `;
 
 export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
-  const { id, viewEditor, handleTextContentChange } = props;
+  const { id, viewEditor } = props;
+
+  const dispatch = useAppDispatch();
 
   const darkMode = useAppSelector(state => state.darkTheme)
   const selectedNote = useAppSelector(state => state.notes.find(note => note.id === id))
-
-  function changeTextContent(value: string | undefined): void {
-    if (!value) return;
-    handleTextContentChange(value);
-  }
 
   return (
     <MDEditorWrapper>
@@ -40,7 +36,7 @@ export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
           }}
           preview={"edit"}
           hideToolbar
-          onChange={changeTextContent}
+          onChange={(content) => dispatch(noteSlice.actions.changeContent({id, newContent: (content ?? ' ')}))}
         />
       ) : (
         <MDEditor.Markdown style={{ padding: "24px" }} source={selectedNote?.content} />

@@ -41,7 +41,7 @@ export const NotesThumbnailRightContent = styled.div`
   gap: 16px;
 `;
 
-export const NoteThumbnail = styled.button`
+export const NoteThumbnail = styled.a`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

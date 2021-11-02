@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAppDispatch } from "../../app/hooks";
-import { noteSlice } from "../../app/noteSlice";
 import { Header1 } from "../base";
 import MarkDownEditor from "../MarkDownEditor/MarkDownEditor";
 
@@ -41,18 +39,7 @@ const EditorWrapper = styled.div`
 
 export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 	const [showEditor, setShowEditor] = useState<boolean>(false);
-	const { id, title, content, handleModal } = props;
-
-	const dispatch = useAppDispatch();
-
-	// todo: make it possible to change a title
-	// function handleTitleChange(newTitle: string): void {
-	// 	dispatch(noteSlice.actions.changeTitle({ id, newTitle }));
-	// }
-
-	function handleContentChange(newContent: string): void {
-		dispatch(noteSlice.actions.changeContent({ id, newContent }));
-	}
+	const { id, title, handleModal } = props;
 
 	return (
 		<ModalContainer>
@@ -70,8 +57,6 @@ export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 				<MarkDownEditor
 					id={id}
 					viewEditor={showEditor}
-					textContent={content}
-					handleTextContentChange={handleContentChange}
 				/>
 			</EditorWrapper>
 		</ModalContainer>
