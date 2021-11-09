@@ -8,11 +8,7 @@ const tabs = [
     name: "home",
     path: "/"
   },
-  {
-    name: "editor",
-    path: "/editor",
-  },
-  {
+ {
     name: "settings",
     path: "/settings"
   }

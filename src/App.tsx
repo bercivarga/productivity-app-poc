@@ -6,7 +6,6 @@ import { themeSlice } from "./app/themeSlice";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-import Editor from "./components/Editor/Editor";
 
 function App(): JSX.Element {
   const isDarkTheme = useAppSelector((state) => state.darkTheme);
@@ -29,9 +28,6 @@ function App(): JSX.Element {
         />
         <main>
           <Switch>
-            <Route path={"/editor"}>
-              <Editor />
-            </Route>
             <Route path={"/settings"}>
               <Settings />
             </Route>
