@@ -4,10 +4,11 @@ import { SecondaryButton, CloseButton } from "../base";
 import MarkDownEditor from "../MarkDownEditor/MarkDownEditor";
 import { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
+import { INote } from "../../app/noteSlice";
 
 export interface IMarkDownModal {
-	id: string;
-	handleModal: (show: boolean, id: string) => void;
+	note: INote | undefined;
+	handleModal: (show: boolean, note: INote | undefined) => void;
 }
 
 const ModalContainer = styled.a`
@@ -50,10 +51,10 @@ const ButtonsWrapper = styled.div`
 
 export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 	const [showEditor, setShowEditor] = useState<boolean>(false);
-	const { id, handleModal } = props;
+	const { note, handleModal } = props;
 
 	return (
-		<ModalContainer onClick={() => handleModal(false, "0")}>
+		<ModalContainer onClick={() => handleModal(false, undefined)}>
 			<EditorWrapper onClick={(e) => e.stopPropagation()}>
 				<ButtonsWrapper>
 					<SecondaryButton
@@ -62,7 +63,7 @@ export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 					>
 						Toggle Markdown
 					</SecondaryButton>
-					<CloseButton type="button" onClick={() => handleModal(false, "0")}>
+					<CloseButton type="button" onClick={() => handleModal(false, undefined)}>
 						<svg viewBox="0 0 24 24">
 							<path
 								fill="currentColor"
@@ -71,7 +72,7 @@ export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 						</svg>
 					</CloseButton>
 				</ButtonsWrapper>
-				<MarkDownEditor id={id} viewEditor={showEditor} />
+				<MarkDownEditor note={note} viewEditor={showEditor} />
 			</EditorWrapper>
 		</ModalContainer>
 	);

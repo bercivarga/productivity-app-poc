@@ -68,7 +68,7 @@ export default function HomePage(): JSX.Element {
   const [content, setContent] = useState<string>(""); // todo move this to the place of the editor
   const [formError, setFormError] = useState<boolean>(false); // todo move this to the place of the editor
   const [showNoteModal, setShowNoteModal] = useState<boolean>(false);
-  const [currentNote, setCurrentNote] = useState<string>("0");
+  const [currentNote, setCurrentNote] = useState<INote | undefined>()
 
   const dispatch = useAppDispatch();
 
@@ -82,8 +82,8 @@ export default function HomePage(): JSX.Element {
     return sortedNotes;
   }
 
-  function handleModal(show: boolean, id: string) {
-    setCurrentNote(id);
+  function handleModal(show: boolean, note: INote | undefined) {
+    setCurrentNote(note);
     setShowNoteModal(show);
   }
 
@@ -124,13 +124,13 @@ export default function HomePage(): JSX.Element {
         <PrimaryButton>Submit</PrimaryButton>
       </HomePageForm>
       {showNoteModal && (
-        <MarkDownModal id={currentNote} handleModal={handleModal} />
+        <MarkDownModal note={currentNote} handleModal={handleModal} />
       )}
       <NotesThumbnailContainer>
         {sortNotesByCreationTime(notes).map((note) => (
           <NoteThumbnail
             key={note.id}
-            onClick={() => handleModal(true, note.id)}
+            onClick={() => handleModal(true, note)}
           >
             <Header2
               style={{
