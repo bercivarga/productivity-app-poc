@@ -7,8 +7,9 @@ import { ITheme } from "../utils";
 import { INote } from "../../app/noteSlice";
 
 export interface IMarkDownModal {
-	note: INote | undefined;
+	note: INote;
 	handleModal: (show: boolean, note: INote | undefined) => void;
+    handleNoteContentChange: (note: INote, content: string) => void;
 }
 
 const ModalContainer = styled.a`
@@ -51,8 +52,8 @@ const ButtonsWrapper = styled.div`
 
 export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 	const [showEditor, setShowEditor] = useState<boolean>(false);
-	const { note, handleModal } = props;
-
+	const { note, handleModal, handleNoteContentChange } = props;
+    
 	return (
 		<ModalContainer onClick={() => handleModal(false, undefined)}>
 			<EditorWrapper onClick={(e) => e.stopPropagation()}>
@@ -72,7 +73,7 @@ export default function MarkDownModal(props: IMarkDownModal): JSX.Element {
 						</svg>
 					</CloseButton>
 				</ButtonsWrapper>
-				<MarkDownEditor note={note} viewEditor={showEditor} />
+				<MarkDownEditor note={note} viewEditor={showEditor} handleNoteContentChange={handleNoteContentChange} />
 			</EditorWrapper>
 		</ModalContainer>
 	);

@@ -2,13 +2,14 @@ import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import styled, { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { INote, noteSlice } from "../../app/noteSlice";
+import { useAppSelector } from "../../app/hooks";
+import { INote } from "../../app/noteSlice";
 import { Header1 } from "../base";
 
 export interface IMarkDownEditor {
-  note: INote | undefined;
+  note: INote;
   viewEditor: boolean;
+  handleNoteContentChange: (note: INote, content: string) => void;
 }
 
 const MDEditorWrapper = styled.div`
@@ -22,9 +23,7 @@ const MDEditorWrapper = styled.div`
 `;
 
 export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
-  const { note, viewEditor } = props;
-
-  const dispatch = useAppDispatch();
+  const { note, viewEditor, handleNoteContentChange } = props;
 
   const darkMode = useAppSelector(state => state.darkTheme)
 
@@ -40,7 +39,7 @@ export default function MarkDownEditor(props: IMarkDownEditor): JSX.Element {
           }}
           preview={"edit"}
           hideToolbar
-          onChange={(content) => {console.log(content);dispatch(noteSlice.actions.changeContent({id: (note?.id ?? ''), newContent: (content ?? '')}))}}
+          onChange={(content) => handleNoteContentChange(note, (content ?? ''))}
         />
       ) : (
         <MDEditor.Markdown source={note?.content} />
