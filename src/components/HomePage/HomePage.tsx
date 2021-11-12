@@ -68,7 +68,8 @@ export default function HomePage(): JSX.Element {
   const [content, setContent] = useState<string>(""); // todo move this to the place of the editor
   const [formError, setFormError] = useState<boolean>(false); // todo move this to the place of the editor
   const [showNoteModal, setShowNoteModal] = useState<boolean>(false);
-  const [currentNote, setCurrentNote] = useState<string>("0");
+  const [currentNote, setCurrentNote] = useState<INote | undefined>()  
+  const selectedNote = useAppSelector(state => state.notes.find((n: INote) => n.id === currentNote?.id))
 
   const dispatch = useAppDispatch();
 
@@ -82,9 +83,13 @@ export default function HomePage(): JSX.Element {
     return sortedNotes;
   }
 
-  function handleModal(show: boolean, id: string) {
-    setCurrentNote(id);
+  function handleModal(show: boolean, note: INote | undefined) {
+    setCurrentNote(note);
     setShowNoteModal(show);
+  }
+
+  function handleNoteContentChange(note: INote, content: string): void {
+     dispatch(noteSlice.actions.changeContent({id: (note?.id ?? ''), newContent: (content ?? '')}));
   }
 
   return (
@@ -123,14 +128,18 @@ export default function HomePage(): JSX.Element {
         {formError && <HelperText>Please fill in all the fields.</HelperText>}
         <PrimaryButton>Submit</PrimaryButton>
       </HomePageForm>
-      {showNoteModal && (
-        <MarkDownModal id={currentNote} handleModal={handleModal} />
+      {showNoteModal && selectedNote && (
+        <MarkDownModal
+            note={selectedNote}
+            handleModal={handleModal}
+            handleNoteContentChange={handleNoteContentChange}
+        />
       )}
       <NotesThumbnailContainer>
         {sortNotesByCreationTime(notes).map((note) => (
           <NoteThumbnail
             key={note.id}
-            onClick={() => handleModal(true, note.id)}
+            onClick={() => handleModal(true, note)}
           >
             <Header2
               style={{
