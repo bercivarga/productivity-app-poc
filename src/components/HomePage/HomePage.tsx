@@ -14,11 +14,6 @@ import styled, { ThemeProps } from "styled-components";
 import { ITheme } from "../utils";
 import MarkDownModal from "../MarkdownModal/MarkdownModal";
 
-export function useFetchNote(id: string) {
-    const fetchedNote = useAppSelector(state => state.notes.find((n: INote) => n.id === id));
-    return fetchedNote;
-}
-
 export const HomePageForm = styled.form`
   display: flex;
   flex-direction: column;
