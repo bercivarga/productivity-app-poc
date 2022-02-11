@@ -52,13 +52,14 @@ export const noteSlice = createSlice({
       state,
       action: PayloadAction<{ title: string; content: string; time: ITime }>
     ) => {
-      state.push(
+      return [
+        ...state,
         createNote(
           action.payload.title,
           action.payload.content,
           action.payload.time
         )
-      );
+      ]
     },
     remove: (state, action: PayloadAction<string>) => {
       return state.filter((note) => note.id !== action.payload);
